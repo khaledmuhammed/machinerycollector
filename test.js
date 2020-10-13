@@ -3,19 +3,13 @@ const {performance} = require('perf_hooks');
 const { getHeapCodeStatistics } = require('v8');
 scrape = new scraper();
 
-// let products = (async () => {
-//     const response = await scrape.scrapeSite('https://www.justheavyequipment.com.au/equipment-for-sale/search');
-//     return response;
-//   })()
+let products = (async () => {
+    const response = await scrape.scrapeSite('https://www.justheavyequipment.com.au/equipment-for-sale/search');
+    return response;
+  })()
 
-// products.then((data)=>{
-//     console.log(data);
-// })
-
-scrape.readWebsites().then((data)=>{
-    data.forEach(element => {
-        scrape.scrapeSite(element);
-    });
+products.then((data)=>{
+    console.log(data);
 })
 
 

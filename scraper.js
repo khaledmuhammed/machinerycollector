@@ -25,14 +25,17 @@ class scraper{
     }
 
 
-    async scrapeProducts(page,x=1){
+    async scrapeProducts(page,fn){
         
 
         const products_names = await page.$$('h2.product-listing-item__title');
         const products_prices = await page.$$('div.product-listing-item__cost');
         const products_images = await page.$$('img.c-lazy');
         const products_links = await page.$$('a.product-listing-item__enquire');
-
+        if (!products_names[0]){
+            fn(false);
+            return
+        }
         for (let index = 0; index < products_names.length; index++) {
 
             const product_name_el = await products_names[index].getProperty('textContent');
@@ -55,18 +58,27 @@ class scraper{
       
             this.productsList.push(product);
           }
-          
+          fn(true);
     };
     async scrapeSite(url){
         const browser = await puppeteer.launch({headless:false,defaultViewport:null});
         const page = await browser.newPage();
-        await page.goto(url);
-        await this.delay(2000);
-        await this.autoScroll(page);
-        await this.scrapeProducts(page);
-        const nextBtn = await page.$('#search-content > div > div.sk-pagination-navigation.is-numbered > div > div:nth-child(6)');
-        await nextBtn.evaluate(nextBtn => nextBtn.click({delay:2000}));
-        await this.scrapeProducts(page,2);
+        
+        let url_pages = 'https://www.justheavyequipment.com.au/equipment-for-sale/search?p='
+        let next = true;
+        let index = 1;
+        while(next){
+            await page.goto(url_pages+index);
+            await this.delay(1500);
+            await this.autoScroll(page);
+            await this.scrapeProducts(page,(found)=>{
+                next = found;
+            });
+            index+=1;
+    }
+        
+        
+        
         await page.close();
         await browser.close();
         
@@ -92,10 +104,9 @@ class scraper{
                         clearInterval(timer);
                         resolve();
                     }
-                }, 75);
+                }, 50);
             });
         });
-        
       }
 }
 module.exports = scraper;
