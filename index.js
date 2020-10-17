@@ -8,14 +8,14 @@ const compareAndSaveResults = require('./resultAnalysis');
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 3,
-        timeout: 120*1000,
+        timeout: 5*60*1000,
         puppeteerOptions:{headless:false,defaultViewport:null}
     });
     
     await cluster.task(async ({page,data:webData})=>{
-        await extractProducts(webData,page,0).then((data)=>{
+        await extractProducts(webData,page,0).then(async (data)=>{
                 console.log(data);
-                compareAndSaveResults(data);
+                await compareAndSaveResults(data);
         });
     });
 

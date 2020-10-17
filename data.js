@@ -30,7 +30,9 @@ const websiteData = [
     },
     {
         url:['https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&',
-        'https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&p=2'],
+        'https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&p=2',
+        'https://www.machines4u.com.au/search/wheel+loader/?pdid=74',
+        'https://www.machines4u.com.au/search/wheel+loader/?pdid=74&page=2'],
         productSelector:'div.tiled_results ',
         nameSelector:'a.equip_link',
         priceSelector:'span.price_container',

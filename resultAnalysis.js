@@ -6,11 +6,10 @@ mongoose.connect(mongoUri,{useNewUrlParser:true,useUnifiedTopology: true})
         .then(() => console.log('mongoDB Connected'))
         .catch(err => console.log(err));
 
-const compareAndSaveResults = data=>{
+const compareAndSaveResults =async data=>{
     try{
-        data.forEach(element => {
-            const products = new product(element);
-            products.save().catch(err => console.log(err));
+        data.forEach(async element => {
+            await product.updateOne({link:element.link},element,{upsert: true});
         });
         return 
     }catch(err){
