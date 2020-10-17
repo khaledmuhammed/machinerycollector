@@ -33,4 +33,4 @@ const productSchema = new Schema({
         type:String,
     }
 })
-module.exports = productSchema;
+module.productSchema = productSchema;
