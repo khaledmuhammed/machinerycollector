@@ -16,7 +16,6 @@ const productSchema = new Schema({
     },
     image:{
         type:String,
-        required:true
     },
     domain:{
         type:String,
@@ -33,4 +32,4 @@ const productSchema = new Schema({
         type:String,
     }
 })
-module.productSchema = productSchema;
+module.exports = mongoose.model('product',productSchema);

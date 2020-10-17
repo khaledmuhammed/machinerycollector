@@ -1,16 +1,15 @@
 const {mongoUri} = require('./data');
 const mongoose = require('mongoose');
-const {productSchema} = require('./models/product');
+const product = require('./models/product');
 
 mongoose.connect(mongoUri,{useNewUrlParser:true,useUnifiedTopology: true})
         .then(() => console.log('mongoDB Connected'))
         .catch(err => console.log(err));
 
-const compareAndSaveResults = data =>{
+const compareAndSaveResults = data=>{
     try{
-        console.log('hello');
         data.forEach(element => {
-            const products = new productSchema(element);
+            const products = new product(element);
             products.save().catch(err => console.log(err));
         });
         return 
@@ -19,4 +18,4 @@ const compareAndSaveResults = data =>{
     }
 }
 
-module.compareAndSaveResults = compareAndSaveResults;
+module.exports = compareAndSaveResults;
