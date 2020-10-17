@@ -1,17 +1,29 @@
-const puppeteer = require('puppeteer');
+const {Cluster} = require('puppeteer-cluster');
 const {extractProducts} = require('./productsScraper');
 const {websiteData} = require('./data');
 const compareAndSaveResults = require('./resultAnalysis');
-(async()=>{
-    const browser = await puppeteer.launch({headless:false,defaultViewport:null});
-    const page = await browser.newPage();
 
-    await extractProducts(websiteData[1],page,0).then((data)=>{
-            console.log(data);
-            compareAndSaveResults(data);
+
+(async()=>{
+    const cluster = await Cluster.launch({
+        concurrency: Cluster.CONCURRENCY_CONTEXT,
+        maxConcurrency: 3,
+        timeout: 120*1000,
+        puppeteerOptions:{headless:false,defaultViewport:null}
+    });
+    
+    await cluster.task(async ({page,data:webData})=>{
+        await extractProducts(webData,page,0).then((data)=>{
+                console.log(data);
+                compareAndSaveResults(data);
+        });
     });
 
-    await page.close();
-    await browser.close();
+    for(index in websiteData){
+        cluster.execute(websiteData[index]);
+    }
+
+    await cluster.idle();
+    await cluster.close();
 })();
 
