@@ -6,7 +6,8 @@ const extractProducts = async (websiteData,page,index) =>{
     }else{
         await page.goto(websiteData.url[index],{waitUntil:'networkidle0'});
 
-        await scrollPageToBottom(page,100,100);
+        const lastpos = await scrollPageToBottom(page,100,100);
+        
         let products = await page.evaluate((webData) => Array.from(document.querySelectorAll(webData.productSelector)).map(compact => (
             {
                 title: compact.querySelector(webData.nameSelector) ? compact.querySelector(webData.nameSelector).innerText.trim() : '',
@@ -18,7 +19,9 @@ const extractProducts = async (websiteData,page,index) =>{
             }
             )),
             websiteData);
-
+            // if(websiteData.domain == 'https://www.gumtree.com.au/'){
+            //     console.log(products);
+            // }
         return products.concat(await extractProducts(websiteData,page,index+=1));
     }
 };
