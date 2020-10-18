@@ -12,7 +12,6 @@ const websiteData = [
     priceSelector:'div.product-listing-item__cost',
     linkSelector:'a.product-listing-item__enquire',
     imgSelector:'img.c-lazy',
-    nextPagePattern:/(p=)(\d+)$/,
     country:'Australia',
     domain:'https://www.justheavyequipment.com.au/'
     },
@@ -24,25 +23,42 @@ const websiteData = [
         priceSelector:'span.user-ad-price-new-design__price',
         linkSelector:'a.user-ad-row-new-design',
         imgSelector:'img.user-ad-image__thumbnail',
-        nextPagePattern:/(page-)(\d+)/,
         country:'Australia',
         domain:'https://www.gumtree.com.au/'
     },
     {
         url:['https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&',
-        'https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&p=2',
-        'https://www.machines4u.com.au/search/wheel+loader/?pdid=74',
-        'https://www.machines4u.com.au/search/wheel+loader/?pdid=74&page=2'],
+        'https://www.machines4u.com.au/search/excavator/?wizardlabelfacet=Machinery+%26+Equipment&pdid=7&p=2'],
         productSelector:'div.tiled_results ',
         nameSelector:'a.equip_link',
         priceSelector:'span.price_container',
         linkSelector:'a.equip_link',
         imgSelector:'div.photo_container > img',
-        nextPagePattern:/(p=)(\d+)$/,
         country:'Australia',
         domain:'https://www.machines4u.com.au/'
     },
-    
+    {
+        url:['https://www.tradeearthmovers.com.au/search/type-loaders',
+            'https://www.tradeearthmovers.com.au/search/type-loaders/page-2'],
+        productSelector:'div.reswrap ',
+        nameSelector:'div.reswrap-title span.left',
+        priceSelector:'div.reswrap-title span.right',
+        linkSelector:'a.view-button',
+        imgSelector:'div.res-img img.lazyload',
+        country:'Australia',
+        domain:'https://www.tradeearthmovers.com.au/'
+    },
+    {
+        url:['https://constructiondealers.com.au/buy/used-construction-earth-moving-machinery/',
+        'https://constructiondealers.com.au/buy/used-construction-earth-moving-machinery/'],
+        productSelector:'div.truck-result',
+        nameSelector:'h2.details-title',
+        priceSelector:'span.price',
+        linkSelector:'a.view-item',
+        imgSelector:'span.truck-thumb img',
+        country:'Australia',
+        domain:'https://constructiondealers.com.au/'
+    },
 ];
 exports.websiteData = websiteData;
 exports.mongoUri = mongoUri;
